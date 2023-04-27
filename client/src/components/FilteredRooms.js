@@ -4,10 +4,10 @@ import { Link, useLoaderData,useNavigate } from 'react-router-dom'
 
 export default function FilteredRooms({ filteredRooms,handleBookRoom,roomDetails }) {
   return (
-    <div>
+    <div className='d-flex gap-3'>
       {filteredRooms.map((room) => {
         return (
-          <div key={room._id} className="col-lg-3 col-md-4 col-sm-12 mb-4 mt-4">
+          <div key={room._id} className="col-lg-4 col-md-4 col-sm-12 mb-4 mt-4">
             <div className="card product_item">
               <div className="body">
                 <div className="cp_img">
@@ -24,7 +24,7 @@ export default function FilteredRooms({ filteredRooms,handleBookRoom,roomDetails
                     <li className="new_price">Price:$ {room.Price}</li>
                   </ul>
                 </div>
-                <div className="hover d-flex justify-content-around">
+                <div className="hover d-flex m-3 justify-content-around">
                   <a href="javascript:void(0);" className="btn btn-primary btn-sm waves-effect">
                     <Button className="zmdi zmdi-plus" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => roomDetails(room._id)}>view Details</Button>
                   </a>{" "}

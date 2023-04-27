@@ -1,10 +1,9 @@
-
-
 // import React from 'react'
-import Navbar from '../components/Navbar'
-import {Outlet} from 'react-router-dom'
+import Navbar from "../components/Navbar";
+import { Outlet } from "react-router-dom";
+import MainPage from "./MainPage";
 
-const { Component } = require("react");
+const { Component, useContext } = require("react");
 
 // export default function Layout() {
 //   return (
@@ -14,16 +13,18 @@ const { Component } = require("react");
 //     </div>
 //   )
 // }
- class Layout extends Component{
-  render(){
-    return(
-       <div>
-      <Navbar/>
-      <Outlet/>
-    </div>
-)
+export default function Layout() {
+  let loggedin;
+  if(window.location.href == "http://localhost:3000/"){
+    loggedin =false
+  }else{
+    loggedin = true
   }
-   
- 
- }
- export default Layout
+
+  return (
+    <div>
+      <Navbar />
+      <Outlet />
+    </div>
+  );
+}

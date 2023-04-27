@@ -5,16 +5,19 @@ import axios from 'axios'
 
 import React from 'react'
 
-import {useParams, useLocation} from 'react-router-dom'
+import {useParams, useLocation,useNavigate} from 'react-router-dom'
 import moment from 'moment';
 // import { useNavigate} from 'react-router-dom'
 
 
 export default function Bookings() {
+  const navigate= useNavigate();
 
   const[loading, setloading]=useState(true);
   const[error, seterror]=useState(false)
-//   const[success, setsuccess]=useState(false)   
+  const [message,setMessage]=useState();
+  //const []
+ const[show, setshow]=useState(false)   
   const[roomData , setroomData]=useState()
 
   const {state} = useLocation(); 
@@ -38,12 +41,12 @@ async function bookRoom (){
         checkout:checkOutDate,
         totalAmount,
         totalDays,
-        // userid:userid
-
-
+        userid:JSON.parse(localStorage.getItem("currentUser")).user.email
     }
     try {
         const res= axios.post('http://localhost:4000/bookings/bookroom',roomDetails)
+        setMessage("Payment and Booking made successfuly")
+        setshow(true)
         
     } catch (error) {
         
@@ -51,7 +54,9 @@ async function bookRoom (){
 
 
 }
-
+function goBack(){
+  navigate('/rooms/getAll')
+}
 
  useEffect(() => {
         
@@ -92,7 +97,7 @@ async function bookRoom (){
                    <h1><b>Booking Details</b></h1>
                    <hr />
     
-                   <p><b>Name</b> : {room.name}</p>
+                   <p><b>User email</b> :{JSON.parse(localStorage.getItem("currentUser")).user.email}</p>
                    <p><b>checkin </b> : {checkin}</p>
                    <p><b>Check out</b> : {checkout}</p>
                    <p><b>Max Count </b>:{room.maxOccupancy} </p>
@@ -107,11 +112,14 @@ async function bookRoom (){
                 <h1><b>Total Amount : {`$ ${totalAmount}`}</b></h1>
  
                    </div>
-                   <button className='btn btn-primary' onClick={bookRoom}>Pay Now</button>
-                  
-    
+                 {!show ? <button className='btn btn-primary' onClick={bookRoom}>Pay Now</button>
+                   :<button className='btn btn-primary' onClick={goBack}>Go back</button>
+                   }
+                  <p style={{color:"blue"}}>{message}</p>
+  
                    
               </div>
+  
     
         </div>
     

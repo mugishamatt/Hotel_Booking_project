@@ -1,7 +1,8 @@
 
 
 import React from 'react';
-import axios from 'axios';
+ import axios from 'axios';
+// const axios = require('axios');
  import '../css/Signup.css'
  import { useState,useEffect,useReducer } from 'react';
  import{NavLink} from "react-router-dom"

@@ -9,6 +9,7 @@ const roomsModel=require('../models/roomsModel')
 
 router.post('/bookroom',async (req,res)=>{
     const {room,
+        userid,
         checkin,
         checkout,
         totalAmount,
@@ -21,7 +22,7 @@ router.post('/bookroom',async (req,res)=>{
             roomid:room._id,
             totalAmount,
             totalDays,
-            // userid:userid,
+            userid:userid,
             transactionid:'001'
         }
             
@@ -35,7 +36,8 @@ router.post('/bookroom',async (req,res)=>{
           bookingid: booking._id,
           checkin: moment(checkin).format("DD-MM-YYYY"),
           checkout: moment(checkout).format("DD-MM-YYYY"),
-        //   userid: user._id,
+          userid: userid,
+         
           status:'booked'
         });
         await oldroom.save();
@@ -48,5 +50,26 @@ router.post('/bookroom',async (req,res)=>{
     }
 
 )
+router.get("/getallbookings", async (req, res) => {
+  try {
+    const bookings = await bookingModel.find({});
+    res.send(bookings);
+  } catch (error) {
+    return res.status(400).json({ message: error });
+  }
+});
+
+// router.get("/getallbookings", async (req, res) => {
+//   const {bookingid,roomid } = req.body;
+//   try {
+//     const room= await roomsModel.find({_id: roomid});
+//     const bookings=room.currentBookings
+//     const temp=bookings.filter(booking=>booking.bookingid.toString()!==bookingid)
+//     console.log(temp);
+//     res.send(room);
+//   } catch (error) {
+//     return res.status(400).json({ message: error });
+//   }
+// });
 
 module.exports=router;

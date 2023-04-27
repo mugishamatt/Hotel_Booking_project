@@ -1,18 +1,21 @@
+const {
+  createRoom,
+  getAllRooms,
+  getRoomById,
+  deleteRoom,
+  updateRoom,
+} = require("../controllers/roomsController");
+const { adminValidate } = require("../controllers/validate");
 
+const express = require("express");
+const router = express.Router();
 
+router.post("/addroom", adminValidate, createRoom);
+router.get("/getAll", getAllRooms);
 
-const {createRoom,getAllRooms,getRoomById}=require('../controllers/roomsController')
+router.get("/:id", getRoomById);
+router.delete("/:id", adminValidate, deleteRoom);
 
+router.put("/:id", adminValidate, updateRoom);
 
-const express=require('express')
-const router=express.Router();
-
-
-router.post('/addroom',createRoom)
-router.get('/getAll',getAllRooms)
-
-router.get('/:id',getRoomById )
-
-
-
-module.exports=router;
+module.exports = router;

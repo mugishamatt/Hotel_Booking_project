@@ -11,7 +11,7 @@ const roomsSchema = new schema({
     maxOccupancy:{ type: Number, require:true},
 	aminities :String,
 	Price: { type: Number, require:true},
-	phoneNumber:{ type: Number, require:true},
+	phoneNumber:{ type:String, require:true},
     description:{ type: String, require:true},
 	category:String,
 	currentBookings:[],

@@ -1,16 +1,32 @@
 
-
 import React from 'react';
 import axios from 'axios';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 
-import { useLoaderData,useNavigate } from 'react-router-dom'
-export  function Users() {
-
-    const usersData=useLoaderData()
-    const navigate=useNavigate()
-    if(navigate.state==='loading'){
-        return <p>loading..</p>
+// HOC to check if user is authenticated
+function withAuth(Component) {
+  return function WrappedComponent(props) {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const navigate = useNavigate();
+    if (!currentUser) {
+      navigate('/login');
+      return null;
     }
+    const { role } = currentUser.user;
+    if (role !== 'admin') {
+      navigate('/rooms/getAll');
+      return null;
+    }
+    return <Component {...props} />;
+  };
+}
+
+function Users() {
+  const usersData = useLoaderData();
+  const navigate = useNavigate();
+  if (navigate.state === 'loading') {
+    return <p>loading..</p>;
+  }
   return (
     <div>
       <h2>Users list</h2>
@@ -73,7 +89,7 @@ export  function Users() {
 }
 
   export const usersLoader= async()=>{
-
     const res=await axios.get('http://localhost:4000/admin/users')
     return res.data
 }
+export default withAuth(Users);
