@@ -23,9 +23,6 @@ app.use('/bookings',bookingRoute)
  }
  main().then(()=>console.log("database is connected")).catch((err)=>console.log(err))
 
-   
-
-//  app.use('/students',studentRoutes)
 
 app.listen(4000,()=>console.log("listerning on port  4000....")) 
 
